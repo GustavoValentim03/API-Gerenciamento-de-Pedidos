@@ -1,10 +1,12 @@
 # API de Gerenciamento de Pedidos
 
-## Objetivo
+## 1. Objetivo
 
-Desenvolver uma API REST para gerenciar pedidos de uma pequena loja, utilizando Node.js, Express e JavaScript.
+Desenvolver uma API REST para gerenciamento de pedidos de uma pequena loja, utilizando Node.js, Express e JavaScript.
 
-## Tecnologias utilizadas
+O projeto permite cadastrar pedidos, consultar informações, listar pedidos existentes e atualizar seus status, aplicando validações e regras de negócio.
+
+## 2. Tecnologias utilizadas
 
 - Node.js
 - Express
@@ -13,7 +15,7 @@ Desenvolver uma API REST para gerenciar pedidos de uma pequena loja, utilizando 
 - Postman
 - Git e GitHub
 
-## Como instalar e executar
+## 3. Como instalar e executar
 
 1. Instale o Node.js.
 2. Abra o terminal na pasta do projeto.
@@ -21,48 +23,147 @@ Desenvolver uma API REST para gerenciar pedidos de uma pequena loja, utilizando 
 
    `npm install`
 
-4. Inicie a API:
+4. Inicie a aplicação:
 
    `npm start`
 
-A API ficará disponível em `http://localhost:3000`.
+A API estará disponível em:
 
-## Como executar os testes
+`http://localhost:3000`
 
-Para executar os testes automatizados, utilize:
+## 4. Funcionalidades
+
+- Cadastrar novos pedidos.
+- Listar todos os pedidos cadastrados.
+- Consultar pedidos pelo identificador.
+- Atualizar o status de pedidos.
+- Validar os dados informados.
+- Rejeitar cadastros com informações inválidas.
+- Informar quando um pedido não for encontrado.
+- Impedir transições de status não permitidas.
+
+## 5. Endpoints da API
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | /pedidos | Cadastrar um pedido |
+| GET | /pedidos | Listar todos os pedidos |
+| GET | /pedidos/:id | Consultar um pedido pelo ID |
+| PATCH | /pedidos/:id/status | Atualizar o status de um pedido |
+
+### Códigos HTTP
+
+- **200 OK:** consulta, listagem ou atualização realizada com sucesso.
+- **201 Created:** pedido cadastrado com sucesso.
+- **400 Bad Request:** dados inválidos ou transição de status não permitida.
+- **404 Not Found:** pedido não encontrado.
+
+## 6. Exemplo de cadastro de pedido
+
+**Método:** POST
+
+**Endereço:** `http://localhost:3000/pedidos`
+
+**Corpo da requisição (JSON):**
+
+```json
+{
+  "cliente": "Gustavo Valentim",
+  "tipo": "entrega",
+  "valor": 350,
+  "prioridade": "normal"
+}
+```
+
+**Exemplo de resposta HTTP 201:**
+
+```json
+{
+  "id": 1,
+  "cliente": "Gustavo Valentim",
+  "tipo": "entrega",
+  "valor": 350,
+  "prioridade": "normal",
+  "status": "recebido"
+}
+```
+
+## 7. Validações e regras de negócio
+
+A API realiza verificações para garantir a integridade das informações.
+
+Entre as validações confirmadas nos testes estão:
+
+- O nome do cliente não pode estar vazio.
+- O valor do pedido deve ser maior que zero.
+- A consulta de um identificador inexistente deve retornar erro.
+- As alterações de status devem respeitar as transições permitidas pelo sistema.
+
+Os valores completos aceitos para tipo, prioridade e transições de status devem ser consultados na implementação do serviço.
+
+## 8. Estrutura do projeto
+
+- `src/app.js`: configuração e inicialização do servidor.
+- `src/routes/pedidoRoutes.js`: definição das rotas.
+- `src/controllers/pedidoController.js`: tratamento das requisições e respostas.
+- `src/services/pedidoService.js`: implementação das regras de negócio.
+- `tests/pedidoService.test.js`: testes automatizados.
+- `evidencias/`: capturas de tela dos testes manuais.
+
+## 9. Testes automatizados com Jest
+
+Os testes foram executados no terminal utilizando:
 
 `npm test`
 
-## Funcionalidades
+### Cenários testados
 
-- Cadastrar pedidos.
-- Listar todos os pedidos.
-- Consultar um pedido pelo ID.
-- Atualizar o status de um pedido.
-- Validar os dados informados no cadastro.
-- Rejeitar pedidos com dados inválidos.
-- Informar quando um pedido não for encontrado.
+1. Cadastro de pedido válido.
+2. Rejeição de cadastro com cliente vazio.
+3. Rejeição de pedido com valor menor ou igual a zero.
+4. Rejeição de identificador inexistente.
 
-## Testes realizados
+### Resultado da execução
 
-Os testes automatizados verificam o cadastro de pedidos válidos, a rejeição de clientes vazios, a rejeição de valores menores ou iguais a zero e a consulta de identificadores inexistentes.
+| Indicador | Resultado |
+|---|---|
+| Suítes executadas | 1 |
+| Suítes aprovadas | 1 |
+| Testes executados | 4 |
+| Testes aprovados | 4 |
+| Testes reprovados | 0 |
 
-Os testes foram executados com sucesso utilizando Jest.
+**Resultado: todos os quatro testes automatizados foram aprovados.**
 
-## Estrutura do projeto
+## 10. Testes manuais com Postman
 
-- `src/app.js`: configura e inicia o servidor.
-- `src/routes/pedidoRoutes.js`: define as rotas da API.
-- `src/controllers/pedidoController.js`: controla as requisições e respostas.
-- `src/services/pedidoService.js`: contém as regras de negócio.
-- `tests/pedidoService.test.js`: contém os testes automatizados.
-- `evidencias/`: pasta destinada às capturas de tela dos testes.
+Foram realizados testes manuais utilizando o Postman para verificar as respostas da API.
 
-## Endereço da API
+As cinco evidências estão disponíveis na pasta `evidencias/`.
 
-`http://localhost:3000/pedidos`
+| Arquivo | Teste |
+|---|---|
+| 01-criacao.png | Cadastro de pedido |
+| 02-validacao.png | Validação de dados obrigatórios |
+| 03-listagem.png | Listagem de pedidos |
+| 04-consulta-inexistente.png | Consulta de pedido inexistente |
+| 05-atualizacao.png | Atualização de status |
 
-## Identificação Acadêmica
+Os testes demonstraram respostas HTTP 201, 200, 400 e 404 conforme os cenários executados.
+
+## 11. Uso de Inteligência Artificial
+
+Utilizei o ChatGPT como ferramenta de apoio durante o desenvolvimento e a execução do projeto.
+
+A inteligência artificial auxiliou na compreensão dos requisitos, configuração do ambiente, interpretação de erros e orientação para execução dos testes.
+
+Durante os testes no Postman, identifiquei um erro HTTP 404 causado por um endereço de requisição incorreto, que foi corrigido.
+
+Também verifiquei uma tentativa de alteração de status que retornou HTTP 400 por uma transição não permitida. Posteriormente, a atualização para o status `cancelado` retornou HTTP 200.
+
+Os testes foram executados por mim no ambiente local, e as evidências foram registradas e publicadas no meu repositório GitHub.
+
+## 12. Identificação acadêmica
 
 **Aluno:** Gustavo Valentim dos Santos  
 **RGM:** 42190703  
@@ -71,52 +172,10 @@ Os testes foram executados com sucesso utilizando Jest.
 **Projeto:** API de Gerenciamento de Pedidos  
 **GitHub:** GustavoValentim03
 
-## Uso de Inteligência Artificial
+## 13. Repositório do projeto
 
-Utilizei o ChatGPT como ferramenta de apoio para compreender os requisitos do projeto, configurar o ambiente de execução e realizar os testes manuais utilizando o Postman.
+https://github.com/GustavoValentim03/API-Gerenciamento-de-Pedidos
 
-Durante a execução, identifiquei e corrigi um problema no endereço de uma requisição que retornava HTTP 404.
+---
 
-Também investiguei uma tentativa de atualização de status que retornava HTTP 400, devido a uma transição não permitida. Após testar a alteração para o status `cancelado`, a API retornou HTTP 200, confirmando o funcionamento da atualização.
-
-A sugestão de testar o status `cancelado` foi aceita após a rejeição da transição anterior. Os testes foram executados por mim, e as cinco evidências foram registradas e publicadas no meu repositório GitHub.
-
-## Evidências dos testes
-
-As cinco evidências estão disponíveis na pasta `evidencias/` do repositório e demonstram as operações de cadastro, validação, listagem, consulta de pedido inexistente e atualização de status.
-
-## Endpoints da API
-
-A API disponibiliza quatro operações principais para gerenciamento de pedidos.
-
-| Método | Rota | Descrição |
-|---|---|---|
-| POST | /pedidos | Cadastrar um novo pedido |
-| GET | /pedidos | Listar todos os pedidos |
-| GET | /pedidos/:id | Consultar um pedido pelo ID |
-| PATCH | /pedidos/:id/status | Atualizar o status de um pedido |
-
-### Códigos HTTP
-
-- **201 Created:** pedido cadastrado com sucesso.
-- **200 OK:** consulta, listagem ou atualização realizada com sucesso.
-- **400 Bad Request:** dados inválidos ou transição de status não permitida.
-- **404 Not Found:** pedido não encontrado.
-
-- ## Endpoints da API
-
-A API disponibiliza quatro operações principais para gerenciamento de pedidos.
-
-| Método | Rota | Descrição |
-|---|---|---|
-| POST | /pedidos | Cadastrar um novo pedido |
-| GET | /pedidos | Listar todos os pedidos |
-| GET | /pedidos/:id | Consultar um pedido pelo ID |
-| PATCH | /pedidos/:id/status | Atualizar o status de um pedido |
-
-### Códigos HTTP
-
-- **201 Created:** pedido cadastrado com sucesso.
-- **200 OK:** consulta, listagem ou atualização realizada com sucesso.
-- **400 Bad Request:** dados inválidos ou transição de status não permitida.
-- **404 Not Found:** pedido não encontrado.
+**Projeto acadêmico desenvolvido por Gustavo Valentim dos Santos.**
