@@ -61,3 +61,26 @@ Os testes foram executados com sucesso utilizando Jest.
 ## Endereço da API
 
 `http://localhost:3000/pedidos`
+
+## Identificação Acadêmica
+
+**Aluno:** Gustavo Valentim dos Santos  
+**RGM:** 42190703  
+**Instituição:** Universidade Cruzeiro do Sul  
+**Disciplina:** Tópicos Avançados em Sistemas de Informação II  
+**Projeto:** API de Gerenciamento de Pedidos  
+**GitHub:** GustavoValentim03
+
+## Uso de Inteligência Artificial
+
+Utilizei o ChatGPT como ferramenta de apoio para compreender os requisitos do projeto, configurar o ambiente de execução e realizar os testes manuais utilizando o Postman.
+
+Durante a execução, identifiquei e corrigi um problema no endereço de uma requisição que retornava HTTP 404.
+
+Também investiguei uma tentativa de atualização de status que retornava HTTP 400, devido a uma transição não permitida. Após testar a alteração para o status `cancelado`, a API retornou HTTP 200, confirmando o funcionamento da atualização.
+
+A sugestão de testar o status `cancelado` foi aceita após a rejeição da transição anterior. Os testes foram executados por mim, e as cinco evidências foram registradas e publicadas no meu repositório GitHub.
+
+## Evidências dos testes
+
+As cinco evidências estão disponíveis na pasta `evidencias/` do repositório e demonstram as operações de cadastro, validação, listagem, consulta de pedido inexistente e atualização de status.
