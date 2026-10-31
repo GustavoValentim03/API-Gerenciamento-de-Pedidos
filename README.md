@@ -102,3 +102,21 @@ A API disponibiliza quatro operações principais para gerenciamento de pedidos.
 - **200 OK:** consulta, listagem ou atualização realizada com sucesso.
 - **400 Bad Request:** dados inválidos ou transição de status não permitida.
 - **404 Not Found:** pedido não encontrado.
+
+- ## Endpoints da API
+
+A API disponibiliza quatro operações principais para gerenciamento de pedidos.
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | /pedidos | Cadastrar um novo pedido |
+| GET | /pedidos | Listar todos os pedidos |
+| GET | /pedidos/:id | Consultar um pedido pelo ID |
+| PATCH | /pedidos/:id/status | Atualizar o status de um pedido |
+
+### Códigos HTTP
+
+- **201 Created:** pedido cadastrado com sucesso.
+- **200 OK:** consulta, listagem ou atualização realizada com sucesso.
+- **400 Bad Request:** dados inválidos ou transição de status não permitida.
+- **404 Not Found:** pedido não encontrado.
